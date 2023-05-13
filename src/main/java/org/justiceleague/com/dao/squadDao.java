@@ -12,10 +12,10 @@ public interface squadDao {
     List<Squad> getAll();
 
     // CREATE
-    void add(Squad squad);
+    int add(Squad squad);
 
     // READ
-    Power findById(int id);
+    Squad findById(int id);
 
     // UPDATE
     void update(int id, String name, String cause);

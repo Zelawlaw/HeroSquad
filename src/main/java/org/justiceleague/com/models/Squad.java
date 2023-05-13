@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class Squad {
-    private final String varchar;
+    private final String name;
     private final String cause;
     private int id;
 }

@@ -57,10 +57,10 @@ class Sql2oWeaknessDaoTest {
     @Test
     void testAddWeakness(){
       Weakness weakness = new Weakness("Kryptonite","Green Crystall that causes weakness");
-      weaknessDao.add(weakness);
-      Weakness fetchedWeakness = weaknessDao.getAll().get(0);
+     int id = weaknessDao.add(weakness);
+      Weakness fetchedWeakness = weaknessDao.findById(id);
       weaknessesCreatedinTest.add(fetchedWeakness); // to be cleaned up later
-      assertEquals("Ice Breath",fetchedWeakness.getName());
+      assertEquals("Kryptonite",fetchedWeakness.getName());
     }
 
     @Test
