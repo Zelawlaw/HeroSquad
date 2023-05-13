@@ -2,10 +2,13 @@ package org.justiceleague.com.dao.impl;
 
 import io.github.cdimascio.dotenv.Dotenv;
 import org.junit.jupiter.api.*;
+import org.justiceleague.com.models.Power;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -17,6 +20,8 @@ class Sql2oPowerDaoTest {
 
     private Dotenv dotenv;
     private Connection conn;
+
+    private static List<Power> powersCreatedinTest = new ArrayList<>();
 
 
     @BeforeAll
@@ -42,11 +47,37 @@ class Sql2oPowerDaoTest {
 
     @Test
     void testConnection() {
+        assertTrue(true);
+    }
+
+    @Test
+    void testAddPower(){
+      Power power = new Power("Ice Breath","freeze things with breath");
+      powerDao.add(power);
+      Power fetchedPower = powerDao.getAll().get(0);
+      powersCreatedinTest.add(fetchedPower); // to be cleaned up later
+      assertEquals("Ice Breath",fetchedPower.getName());
+    }
+
+    @Test
+    void testDeletebyId(){
+        Power power = new Power("Flight","Power to Fly");
+        powerDao.add(power);
+        Power fetchedPower = powerDao.getAll().get(0);
+        powersCreatedinTest.add(fetchedPower); //to be cleaned up later
+        powerDao.deleteById(fetchedPower.getId());
+        assertEquals(0,powerDao.getAll().size());
     }
 
     @AfterEach
     void tearDown() {
+       for(Power power: powersCreatedinTest){
+           System.out.println("deleting :"+power.getName()+" id :"+power.getId());
+           powerDao.deleteById(power.getId());
+       }
         conn.close();
 
     }
+
+
 }
