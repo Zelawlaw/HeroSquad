@@ -1,11 +1,11 @@
-package org.justiceleague.com.dao.impl;
+package org.heroesunlimited.com.dao.impl;
 
 import io.github.cdimascio.dotenv.Dotenv;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
-import org.justiceleague.com.models.Squad;
+import org.heroesunlimited.com.models.Squad;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 

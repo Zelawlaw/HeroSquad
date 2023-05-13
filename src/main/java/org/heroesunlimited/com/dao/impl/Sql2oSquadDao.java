@@ -1,8 +1,8 @@
-package org.justiceleague.com.dao.impl;
+package org.heroesunlimited.com.dao.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.justiceleague.com.dao.squadDao;
-import org.justiceleague.com.models.Squad;
+import org.heroesunlimited.com.dao.squadDao;
+import org.heroesunlimited.com.models.Squad;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 import org.sql2o.Sql2oException;

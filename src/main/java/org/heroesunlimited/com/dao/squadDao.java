@@ -1,7 +1,6 @@
-package org.justiceleague.com.dao;
+package org.heroesunlimited.com.dao;
 
-import org.justiceleague.com.models.Power;
-import org.justiceleague.com.models.Squad;
+import org.heroesunlimited.com.models.Squad;
 
 import java.util.List;
 

@@ -1,9 +1,8 @@
-package org.justiceleague.com.dao.impl;
+package org.heroesunlimited.com.dao.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.justiceleague.com.dao.herosDao;
-import org.justiceleague.com.models.Hero;
-import org.justiceleague.com.models.Power;
+import org.heroesunlimited.com.dao.herosDao;
+import org.heroesunlimited.com.models.Hero;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 import org.sql2o.Sql2oException;
@@ -26,7 +25,7 @@ public class Sql2oHeroDao  implements herosDao {
     @Override
     public List<Hero> getAllNotInSquad() {
         try(Connection con = sql2o.open()){
-            return con.createQuery("SELECT * FROM heros WHERE squadId IS NULL") //raw sql
+            return con.createQuery("SELECT * FROM heros WHERE squadId = 0") //raw sql
                     .executeAndFetch(Hero.class); //fetch a list
         }
     }
@@ -41,6 +40,16 @@ public class Sql2oHeroDao  implements herosDao {
     }
 
     @Override
+    public List<Hero> getAllWithPower(int powerId) {
+        return null;
+    }
+
+    @Override
+    public List<Hero> getAllWithWeakness(int weaknessId) {
+        return null;
+    }
+
+    @Override
     public int add(Hero hero) {
         String sql = "INSERT INTO heros (name,age,squadid,powerid,weaknessid) VALUES (:name,:age,:squadId,:powerId" +
                 ",:weaknessId)"; //raw sql
@@ -48,7 +57,7 @@ public class Sql2oHeroDao  implements herosDao {
             return (int)  con.createQuery(sql, true)
                     .addParameter("name",hero.getName())
                     .addParameter("age",hero.getAge())
-                    .addParameter("squadId",hero.getSquadId()==0?null:hero.getSquadId())
+                    .addParameter("squadId",hero.getSquadId())
                     .addParameter("powerId",hero.getPowerId())
                     .addParameter("weaknessId",hero.getWeaknessId())
                     .executeUpdate()
@@ -58,12 +67,26 @@ public class Sql2oHeroDao  implements herosDao {
 
     @Override
     public Hero findById(int id) {
-        return null;
+        String sql = "SELECT * FROM heros WHERE id=:id";
+        try(Connection con = sql2o.open()){
+         return  con.createQuery(sql)
+                    .addParameter("id", id)
+                    .executeAndFetchFirst(Hero.class);
+        }
     }
 
     @Override
     public void update(int id, int squadId, int powerId, int weaknessId) {
-
+        String sql = "UPDATE  heros SET squadid = :squadId,powerid = :powerId,weaknessid =:weaknessId " +
+                "WHERE id = :id"; //raw sql
+        try(Connection con = sql2o.open()){ //try to open a connection
+           con.createQuery(sql)
+                    .addParameter("id",id)
+                    .addParameter("squadId",squadId)
+                    .addParameter("powerId",powerId)
+                    .addParameter("weaknessId",weaknessId)
+                    .executeUpdate();
+        }
     }
 
     @Override

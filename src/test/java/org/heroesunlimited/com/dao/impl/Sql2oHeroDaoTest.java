@@ -1,12 +1,12 @@
-package org.justiceleague.com.dao.impl;
+package org.heroesunlimited.com.dao.impl;
 
 
 import io.github.cdimascio.dotenv.Dotenv;
+import org.heroesunlimited.com.models.Hero;
+import org.heroesunlimited.com.models.Power;
+import org.heroesunlimited.com.models.Squad;
+import org.heroesunlimited.com.models.Weakness;
 import org.junit.jupiter.api.*;
-import org.justiceleague.com.models.Hero;
-import org.justiceleague.com.models.Power;
-import org.justiceleague.com.models.Squad;
-import org.justiceleague.com.models.Weakness;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 
@@ -104,6 +104,17 @@ public class Sql2oHeroDaoTest {
     }
 
     @Test
+    void testFindHero() {
+        Hero hero = new Hero("The Thing",78,powerId3,weaknessId3);
+        hero.setSquadId(squadId3);
+        int Id = heroDao.add(hero);
+        Hero fetchedHero = heroDao.findById(Id);
+        herosCreatedinTest.add(Id);
+        assertEquals(Id, fetchedHero.getId());
+
+    }
+
+    @Test
     void testGetAllHeros(){
         Hero hero1 = new Hero("superman",30,powerId1,weaknessId1);
         Hero hero2 = new Hero("batman",35,powerId2,weaknessId2);
@@ -133,12 +144,35 @@ public class Sql2oHeroDaoTest {
         hero2.setSquadId(squadId2);
         Hero hero3 = new Hero("wonderwoman",25,powerId3,weaknessId3);
         hero3.setSquadId(squadId1);
-        heroDao.add(hero1);
-     //   herosCreatedinTest.add(heroDao.add(hero1));
-      //  herosCreatedinTest.add(heroDao.add(hero2));
-    //    herosCreatedinTest.add(heroDao.add(hero3));
+
+        herosCreatedinTest.add(heroDao.add(hero1));
+        herosCreatedinTest.add(heroDao.add(hero2));
+        herosCreatedinTest.add(heroDao.add(hero3));
         assertEquals(1,heroDao.getAllNotInSquad().size());
     }
+
+    @Test
+    void testUpdateHero(){
+        Hero hero1 = new Hero("superman",30,powerId1,weaknessId1);
+        int Id = heroDao.add(hero1);
+        Hero hero2 = new Hero("Flash",30,powerId1,weaknessId1);
+        hero2.setSquadId(squadId3);
+        int Id2 = heroDao.add(hero2);
+        herosCreatedinTest.add(Id);
+        herosCreatedinTest.add(Id2);
+        heroDao.update(Id,squadId2,powerId3,weaknessId2);
+        heroDao.update(Id2,0,powerId1,weaknessId1);
+        Hero fetchedHero = heroDao.findById(Id);
+        Hero fetchedHero2 = heroDao.findById(Id2);
+        //hero 1 update
+        assertEquals(squadId2,fetchedHero.getSquadId());
+        assertEquals(powerId3,fetchedHero.getPowerId());
+        assertEquals(weaknessId2,fetchedHero.getWeaknessId());
+        //hero 2 update check if squad id is empty
+        assertEquals(0,fetchedHero2.getSquadId());
+
+
+     }
 
     @Test
     void testDeleteHero(){

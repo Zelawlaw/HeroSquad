@@ -1,6 +1,6 @@
-package org.justiceleague.com.dao;
+package org.heroesunlimited.com.dao;
 
-import org.justiceleague.com.models.Weakness;
+import org.heroesunlimited.com.models.Weakness;
 
 import java.util.List;
 

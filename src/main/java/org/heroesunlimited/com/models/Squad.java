@@ -1,4 +1,4 @@
-package org.justiceleague.com.models;
+package org.heroesunlimited.com.models;
 
 import lombok.Data;
 

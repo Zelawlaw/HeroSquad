@@ -1,8 +1,8 @@
-package org.justiceleague.com.dao.impl;
+package org.heroesunlimited.com.dao.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.justiceleague.com.dao.weaknessesDao;
-import org.justiceleague.com.models.Weakness;
+import org.heroesunlimited.com.dao.powersDao;
+import org.heroesunlimited.com.models.Power;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 import org.sql2o.Sql2oException;
@@ -10,41 +10,41 @@ import org.sql2o.Sql2oException;
 import java.util.List;
 
 @RequiredArgsConstructor
-public class Sql2oWeaknessDao implements weaknessesDao {
+public class Sql2oPowerDao implements powersDao {
 
     private final Sql2o sql2o;
     @Override
-    public List<Weakness> getAll() {
+    public List<Power> getAll() {
         try(Connection con = sql2o.open()){
-            return con.createQuery("SELECT * FROM weaknesses") //raw sql
-                    .executeAndFetch(Weakness.class); //fetch a list
+            return con.createQuery("SELECT * FROM powers") //raw sql
+                    .executeAndFetch(Power.class); //fetch a list
         }
     }
 
     @Override
-    public int add(Weakness weakness) {
+    public int add(Power power) {
 
-        String sql = "INSERT INTO weaknesses (name,description) VALUES (:name,:description)"; //raw sql
+        String sql = "INSERT INTO powers (name,description) VALUES (:name,:description)"; //raw sql
         try(Connection con = sql2o.open()){ //try to open a connection
        return (int)  con.createQuery(sql, true)
-                    .bind(weakness)
+                    .bind(power)
                     .executeUpdate()
                     .getKey();
         }
     }
 
     @Override
-    public Weakness findById(int id) {
+    public Power findById(int id) {
         try(Connection con = sql2o.open()){
-            return con.createQuery("SELECT * FROM weaknesses WHERE id=:id") //raw sql
+            return con.createQuery("SELECT * FROM powers WHERE id=:id") //raw sql
                     .addParameter("id",id)
-                    .executeAndFetchFirst(Weakness.class); //fetch a list
+                    .executeAndFetchFirst(Power.class); //fetch a list
         }
     }
 
     @Override
     public void update(int id, String name, String description) {
-        String sql = "UPDATE weaknesses SET name = :name, description = :description WHERE id=:id";
+        String sql = "UPDATE powers SET name = :name, description = :description WHERE id=:id";
         try(Connection con = sql2o.open()){
             con.createQuery(sql)
                     .addParameter("id", id)
@@ -59,7 +59,7 @@ public class Sql2oWeaknessDao implements weaknessesDao {
     @Override
     public void deleteById(int id) {
 
-        String sql = "DELETE FROM weaknesses WHERE id=:id";
+        String sql = "DELETE FROM powers WHERE id=:id";
         try(Connection con = sql2o.open()){
             con.createQuery(sql)
                     .addParameter("id", id)
@@ -70,7 +70,7 @@ public class Sql2oWeaknessDao implements weaknessesDao {
     }
 
     @Override
-    public void clearAllWeaknesses() {
+    public void clearAllPowers() {
 
     }
 }

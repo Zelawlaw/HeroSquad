@@ -1,11 +1,8 @@
-package org.justiceleague.com.dao.impl;
+package org.heroesunlimited.com.dao.impl;
 
 import io.github.cdimascio.dotenv.Dotenv;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
-import org.justiceleague.com.models.Power;
+import org.heroesunlimited.com.models.Power;
+import org.junit.jupiter.api.*;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 
@@ -76,7 +73,7 @@ class Sql2oPowerDaoTest {
         int id = powerDao.add(power);
         powerDao.update(id, "Metal Claws", power.getDescription());
         powersCreatedinTest.add(powerDao.findById(id));
-        assertEquals("Metal Claws", powerDao.findById(id).getName());
+        Assertions.assertEquals("Metal Claws", powerDao.findById(id).getName());
     }
 
     @Test
