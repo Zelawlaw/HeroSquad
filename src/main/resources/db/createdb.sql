@@ -1,19 +1,5 @@
 
--- object: Heros | type: TABLE --
--- DROP TABLE IF EXISTS Heros CASCADE;
-CREATE TABLE IF NOT EXISTS Heros (
-	id serial NOT NULL,
-	name varchar(50),
-	age integer,
-	squadId integer,
-	powerId integer,
-	weaknessId integer,
-	CONSTRAINT table_a_pk PRIMARY KEY (id),
-	CONSTRAINT table_a_uq UNIQUE (name)
-);
--- ddl-end --
-ALTER TABLE Heros OWNER TO root;
--- ddl-end --
+
 
 -- object: Squads | type: TABLE --
 -- DROP TABLE IF EXISTS Squads CASCADE;
@@ -53,25 +39,39 @@ CREATE TABLE IF NOT EXISTS Weaknesses (
 ALTER TABLE Weaknesses OWNER TO root;
 -- ddl-end --
 
+-- object: Heros | type: TABLE --
+-- DROP TABLE IF EXISTS Heros CASCADE;
+CREATE TABLE IF NOT EXISTS Heros (
+	id serial NOT NULL,
+	name varchar(50),
+	age integer,
+	squadId integer,
+	powerId integer,
+	weaknessId integer,
+	CONSTRAINT table_a_pk PRIMARY KEY (id),
+	CONSTRAINT table_a_uq UNIQUE (name)
+);
+-- ddl-end --
+ALTER TABLE Heros OWNER TO root;
+-- ddl-end --
+
 -- object: "SquadFK" | type: CONSTRAINT --
--- ALTER TABLE Heros DROP CONSTRAINT IF EXISTS "SquadFK" CASCADE;
+ ALTER TABLE Heros DROP CONSTRAINT IF EXISTS SquadFK CASCADE;
 ALTER TABLE Heros ADD CONSTRAINT SquadFK FOREIGN KEY (squadId)
 REFERENCES Squads (id) MATCH SIMPLE
 ON DELETE NO ACTION ON UPDATE NO ACTION;
 -- ddl-end --
 
 -- object: "PowerFK" | type: CONSTRAINT --
--- ALTER TABLE Heros DROP CONSTRAINT IF EXISTS "PowerFK" CASCADE;
+ALTER TABLE Heros DROP CONSTRAINT IF EXISTS PowerFK CASCADE;
 ALTER TABLE Heros ADD CONSTRAINT PowerFK FOREIGN KEY (powerId)
 REFERENCES Powers (id) MATCH SIMPLE
 ON DELETE NO ACTION ON UPDATE NO ACTION;
 -- ddl-end --
 
 -- object: "WeaknessFK" | type: CONSTRAINT --
--- ALTER TABLE Heros DROP CONSTRAINT IF EXISTS "WeaknessFK" CASCADE;
+ ALTER TABLE Heros DROP CONSTRAINT IF EXISTS WeaknessFK CASCADE;
 ALTER TABLE Heros ADD CONSTRAINT WeaknessFK FOREIGN KEY (weaknessId)
 REFERENCES Weaknesses (id) MATCH SIMPLE
 ON DELETE NO ACTION ON UPDATE NO ACTION;
 -- ddl-end --
-
-

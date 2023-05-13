@@ -1,11 +1,16 @@
 package org.justiceleague.com.dao.impl;
 
+import lombok.RequiredArgsConstructor;
 import org.justiceleague.com.dao.powersDao;
 import org.justiceleague.com.models.Power;
+import org.sql2o.Sql2o;
 
 import java.util.List;
 
+@RequiredArgsConstructor
 public class Sql2oPowerDao implements powersDao {
+
+    private final Sql2o sql2o;
     @Override
     public List<Power> getAll() {
         return null;
