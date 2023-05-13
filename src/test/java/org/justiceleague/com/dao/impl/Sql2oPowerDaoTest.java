@@ -91,7 +91,6 @@ class Sql2oPowerDaoTest {
     @AfterEach
     void tearDown() {
        for(Power power: powersCreatedinTest){
-           System.out.println("deleting :"+power.getName()+" id :"+power.getId());
            powerDao.deleteById(power.getId());
        }
         conn.close();

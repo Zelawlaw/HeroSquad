@@ -95,7 +95,6 @@ class Sql2oSquadDaoTest {
     @AfterEach
     void tearDown() {
        for(Squad squad: squadsCreatedinTest){
-           System.out.println("deleting :"+squad.getName()+" id :"+squad.getId());
            squadDao.deleteById(squad.getId());
        }
         conn.close();

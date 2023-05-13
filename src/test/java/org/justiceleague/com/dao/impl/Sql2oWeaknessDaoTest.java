@@ -95,7 +95,6 @@ class Sql2oWeaknessDaoTest {
     @AfterEach
     void tearDown() {
        for(Weakness weakness: weaknessesCreatedinTest){
-           System.out.println("deleting :"+weakness.getName()+" id :"+weakness.getId());
            weaknessDao.deleteById(weakness.getId());
        }
         conn.close();
