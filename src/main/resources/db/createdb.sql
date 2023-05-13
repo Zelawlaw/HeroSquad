@@ -43,10 +43,10 @@ ALTER TABLE Powers OWNER TO root;
 -- object: Weaknesses | type: TABLE --
 -- DROP TABLE IF EXISTS Weaknesses CASCADE;
 CREATE TABLE IF NOT EXISTS Weaknesses (
-	id_c serial NOT NULL,
+	id serial NOT NULL,
 	name varchar(200),
 	description varchar(50),
-	CONSTRAINT table_d_pk PRIMARY KEY (id_c)
+	CONSTRAINT table_d_pk PRIMARY KEY (id)
 );
 
 -- ddl-end --
@@ -70,7 +70,7 @@ ON DELETE NO ACTION ON UPDATE NO ACTION;
 -- object: "WeaknessFK" | type: CONSTRAINT --
 -- ALTER TABLE Heros DROP CONSTRAINT IF EXISTS "WeaknessFK" CASCADE;
 ALTER TABLE Heros ADD CONSTRAINT WeaknessFK FOREIGN KEY (weaknessId)
-REFERENCES Weaknesses (id_c) MATCH SIMPLE
+REFERENCES Weaknesses (id) MATCH SIMPLE
 ON DELETE NO ACTION ON UPDATE NO ACTION;
 -- ddl-end --
 
