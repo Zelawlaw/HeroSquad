@@ -22,26 +22,38 @@ public class Sql2oPowerDao implements powersDao {
     }
 
     @Override
-    public void add(Power power) {
+    public int add(Power power) {
+
         String sql = "INSERT INTO powers (name,description) VALUES (:name,:description)"; //raw sql
         try(Connection con = sql2o.open()){ //try to open a connection
-           con.createQuery(sql, true)
+       return (int)  con.createQuery(sql, true)
                     .bind(power)
                     .executeUpdate()
                     .getKey();
-        } catch (Sql2oException ex) {
-            System.out.println(ex); //oops we have an error!
         }
     }
 
     @Override
     public Power findById(int id) {
-        return null;
+        try(Connection con = sql2o.open()){
+            return con.createQuery("SELECT * FROM powers WHERE id=:id") //raw sql
+                    .addParameter("id",id)
+                    .executeAndFetchFirst(Power.class); //fetch a list
+        }
     }
 
     @Override
     public void update(int id, String name, String description) {
-
+        String sql = "UPDATE powers SET name = :name, description = :description WHERE id=:id";
+        try(Connection con = sql2o.open()){
+            con.createQuery(sql)
+                    .addParameter("id", id)
+                    .addParameter("name",name)
+                    .addParameter("description",description)
+                    .executeUpdate();
+        } catch (Sql2oException ex) {
+            System.out.println(ex);
+        }
     }
 
     @Override

@@ -10,7 +10,7 @@ public interface powersDao {
     List<Power> getAll();
 
     // CREATE
-    void add(Power power);
+    int add(Power power);
 
     // READ
     Power findById(int id);

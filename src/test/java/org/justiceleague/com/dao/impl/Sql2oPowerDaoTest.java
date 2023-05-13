@@ -60,6 +60,25 @@ class Sql2oPowerDaoTest {
     }
 
     @Test
+    void testFindPower(){
+        Power power = new Power("Laser vision","shoot lasers from eyes");
+        int Id =  powerDao.add(power);
+        Power fetchedPower = powerDao.findById(Id);
+        powersCreatedinTest.add(fetchedPower);
+        assertEquals(Id,fetchedPower.getId());
+
+    }
+
+    @Test
+    void testUpdate(){
+      Power power = new Power ("Claws","Titanium retractible claws");
+      int id = powerDao.add(power);
+      powerDao.update(id,"Metal Claws",power.getDescription());
+      powersCreatedinTest.add(powerDao.findById(id));
+      assertEquals("Metal Claws",powerDao.findById(id).getName());
+    }
+
+    @Test
     void testDeletebyId(){
         Power power = new Power("Flight","Power to Fly");
         powerDao.add(power);
