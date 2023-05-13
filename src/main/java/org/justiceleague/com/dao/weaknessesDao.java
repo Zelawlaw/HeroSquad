@@ -11,7 +11,7 @@ public interface weaknessesDao {
     List<Weakness> getAll();
 
     // CREATE
-    void add(Weakness weakness);
+    int add(Weakness weakness);
 
     // READ
     Weakness findById(int id);
