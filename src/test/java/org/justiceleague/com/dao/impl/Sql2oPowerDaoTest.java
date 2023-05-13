@@ -1,7 +1,10 @@
 package org.justiceleague.com.dao.impl;
 
 import io.github.cdimascio.dotenv.Dotenv;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.justiceleague.com.models.Power;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
@@ -11,24 +14,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class Sql2oPowerDaoTest {
 
+    private static final List<Power> powersCreatedinTest = new ArrayList<>();
     private Sql2oPowerDao powerDao;
-
     private Dotenv dotenv;
     private Connection conn;
-
-    private static List<Power> powersCreatedinTest = new ArrayList<>();
-
 
     @BeforeAll
     public void setUp() throws Exception {
         dotenv = Dotenv.load();
         String url = dotenv.get("dbUrl") != null ? dotenv.get("dbUrl") : System.getenv("dbUrl");
-        String user = dotenv.get("dbUsername") != null ?dotenv.get("dbUsername"):System.getenv("dbUsername");
+        String user = dotenv.get("dbUsername") != null ? dotenv.get("dbUsername") : System.getenv("dbUsername");
         String password = dotenv.get("dbPassword") != null ? dotenv.get("dbPassword") : System.getenv("dbPassword");
         Sql2o sql2o = new Sql2o(url, user, password);
 
@@ -51,48 +52,48 @@ class Sql2oPowerDaoTest {
     }
 
     @Test
-    void testAddPower(){
-      Power power = new Power("Ice Breath","freeze things with breath");
-      powerDao.add(power);
-      Power fetchedPower = powerDao.getAll().get(0);
-      powersCreatedinTest.add(fetchedPower); // to be cleaned up later
-      assertEquals("Ice Breath",fetchedPower.getName());
+    void testAddPower() {
+        Power power = new Power("Ice Breath", "freeze things with breath");
+        powerDao.add(power);
+        Power fetchedPower = powerDao.getAll().get(0);
+        powersCreatedinTest.add(fetchedPower); // to be cleaned up later
+        assertEquals("Ice Breath", fetchedPower.getName());
     }
 
     @Test
-    void testFindPower(){
-        Power power = new Power("Laser vision","shoot lasers from eyes");
-        int Id =  powerDao.add(power);
+    void testFindPower() {
+        Power power = new Power("Laser vision", "shoot lasers from eyes");
+        int Id = powerDao.add(power);
         Power fetchedPower = powerDao.findById(Id);
         powersCreatedinTest.add(fetchedPower);
-        assertEquals(Id,fetchedPower.getId());
+        assertEquals(Id, fetchedPower.getId());
 
     }
 
     @Test
-    void testUpdate(){
-      Power power = new Power ("Claws","Titanium retractible claws");
-      int id = powerDao.add(power);
-      powerDao.update(id,"Metal Claws",power.getDescription());
-      powersCreatedinTest.add(powerDao.findById(id));
-      assertEquals("Metal Claws",powerDao.findById(id).getName());
+    void testUpdate() {
+        Power power = new Power("Claws", "Titanium retractible claws");
+        int id = powerDao.add(power);
+        powerDao.update(id, "Metal Claws", power.getDescription());
+        powersCreatedinTest.add(powerDao.findById(id));
+        assertEquals("Metal Claws", powerDao.findById(id).getName());
     }
 
     @Test
-    void testDeletebyId(){
-        Power power = new Power("Flight","Power to Fly");
+    void testDeletebyId() {
+        Power power = new Power("Flight", "Power to Fly");
         powerDao.add(power);
         Power fetchedPower = powerDao.getAll().get(0);
         powersCreatedinTest.add(fetchedPower); //to be cleaned up later
         powerDao.deleteById(fetchedPower.getId());
-        assertEquals(0,powerDao.getAll().size());
+        assertEquals(0, powerDao.getAll().size());
     }
 
     @AfterEach
     void tearDown() {
-       for(Power power: powersCreatedinTest){
-           powerDao.deleteById(power.getId());
-       }
+        for (Power power : powersCreatedinTest) {
+            powerDao.deleteById(power.getId());
+        }
         conn.close();
 
     }

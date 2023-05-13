@@ -20,19 +20,16 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class Sql2oSquadDaoTest {
 
+    private static final List<Squad> squadsCreatedinTest = new ArrayList<>();
     private Sql2oSquadDao squadDao;
-
     private Dotenv dotenv;
     private Connection conn;
-
-    private static List<Squad> squadsCreatedinTest = new ArrayList<>();
-
 
     @BeforeAll
     public void setUp() throws Exception {
         dotenv = Dotenv.load();
         String url = dotenv.get("dbUrl") != null ? dotenv.get("dbUrl") : System.getenv("dbUrl");
-        String user = dotenv.get("dbUsername") != null ?dotenv.get("dbUsername"):System.getenv("dbUsername");
+        String user = dotenv.get("dbUsername") != null ? dotenv.get("dbUsername") : System.getenv("dbUsername");
         String password = dotenv.get("dbPassword") != null ? dotenv.get("dbPassword") : System.getenv("dbPassword");
         Sql2o sql2o = new Sql2o(url, user, password);
 
@@ -55,48 +52,48 @@ class Sql2oSquadDaoTest {
     }
 
     @Test
-    void testAddSquad(){
-      Squad squad = new Squad("Justice League","Justice for All");
-      squadDao.add(squad);
-      Squad fetchedSquad = squadDao.getAll().get(0);
-      squadsCreatedinTest.add(fetchedSquad); // to be cleaned up later
-      assertEquals("Justice League",fetchedSquad.getName());
+    void testAddSquad() {
+        Squad squad = new Squad("Justice League", "Justice for All");
+        squadDao.add(squad);
+        Squad fetchedSquad = squadDao.getAll().get(0);
+        squadsCreatedinTest.add(fetchedSquad); // to be cleaned up later
+        assertEquals("Justice League", fetchedSquad.getName());
     }
 
     @Test
-    void testFindSquad(){
-        Squad squad = new Squad("Guardians","Universal peace");
-        int Id =  squadDao.add(squad);
+    void testFindSquad() {
+        Squad squad = new Squad("Guardians", "Universal peace");
+        int Id = squadDao.add(squad);
         Squad fetchedSquad = squadDao.findById(Id);
         squadsCreatedinTest.add(fetchedSquad);
-        assertEquals(Id,fetchedSquad.getId());
+        assertEquals(Id, fetchedSquad.getId());
 
     }
 
     @Test
-    void testUpdate(){
-      Squad squad = new Squad ("Avengers","Word Peace");
-      int id = squadDao.add(squad);
-      squadDao.update(id,"X-Men","Track MetaHumans");
-      squadsCreatedinTest.add(squadDao.findById(id));
-      assertEquals("X-Men",squadDao.findById(id).getName());
+    void testUpdate() {
+        Squad squad = new Squad("Avengers", "Word Peace");
+        int id = squadDao.add(squad);
+        squadDao.update(id, "X-Men", "Track MetaHumans");
+        squadsCreatedinTest.add(squadDao.findById(id));
+        assertEquals("X-Men", squadDao.findById(id).getName());
     }
 
     @Test
-    void testDeletebyId(){
-        Squad squad = new Squad("BatMen","Follow Batman's code");
+    void testDeletebyId() {
+        Squad squad = new Squad("BatMen", "Follow Batman's code");
         squadDao.add(squad);
         Squad fetchedSquad = squadDao.getAll().get(0);
         squadsCreatedinTest.add(fetchedSquad); //to be cleaned up later
         squadDao.deleteById(fetchedSquad.getId());
-        assertEquals(0,squadDao.getAll().size());
+        assertEquals(0, squadDao.getAll().size());
     }
 
     @AfterEach
     void tearDown() {
-       for(Squad squad: squadsCreatedinTest){
-           squadDao.deleteById(squad.getId());
-       }
+        for (Squad squad : squadsCreatedinTest) {
+            squadDao.deleteById(squad.getId());
+        }
         conn.close();
 
     }
