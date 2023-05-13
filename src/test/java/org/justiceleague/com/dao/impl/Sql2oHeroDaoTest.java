@@ -103,6 +103,24 @@ public class Sql2oHeroDaoTest {
         assertEquals("superman", fetchedHero.getName());
     }
 
+    @Test
+    void testGetAllHeros(){
+        Hero hero1 = new Hero("superman",30,powerId1,weaknessId1);
+        Hero hero2 = new Hero("batman",35,powerId2,weaknessId2);
+        herosCreatedinTest.add(heroDao.add(hero1));
+        herosCreatedinTest.add(heroDao.add(hero2));
+        assertEquals(2,heroDao.getAll().size());
+    }
+
+    @Test
+    void testDeleteHero(){
+        Hero hero = new Hero("WonderWoman",25,powerId3,weaknessId3);
+        int id = heroDao.add(hero);
+        herosCreatedinTest.add(id);
+        heroDao.deleteById(id);
+        assertEquals(0,heroDao.getAll().size());
+    }
+
 
     @AfterEach
     void tearDown() {
