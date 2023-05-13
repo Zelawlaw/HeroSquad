@@ -9,7 +9,7 @@ public class Hero {
     private final int age;
     private int id;
     private int squadId;
-    private int powerId;
-    private int weaknessId;
+    private final int powerId;
+    private final int weaknessId;
 }
 

@@ -6,17 +6,23 @@ import java.util.List;
 
 public interface herosDao {
 
-    // LIST
+    // LIST ALL
     List<Hero> getAll();
 
+    //LIST ALL NOT IN A SQUAD
+    List<Hero> getAllNotInSquad();
+
+    //LIST ALL IN squad
+    List<Hero> getAllInSquad(int squadId);
+
     // CREATE
-    void add(Hero hero);
+    int add(Hero hero);
 
     // READ
     Hero findById(int id);
 
     // UPDATE
-    void update(int id, int powerId, int weaknessId);
+    void update(int id,int squadId, int powerId, int weaknessId);
 
     // DELETE
     void deleteById(int id);
