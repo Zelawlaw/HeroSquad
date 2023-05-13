@@ -25,12 +25,19 @@ public class Sql2oHeroDao  implements herosDao {
 
     @Override
     public List<Hero> getAllNotInSquad() {
-        return null;
+        try(Connection con = sql2o.open()){
+            return con.createQuery("SELECT * FROM heros WHERE squadId IS NULL") //raw sql
+                    .executeAndFetch(Hero.class); //fetch a list
+        }
     }
 
     @Override
     public List<Hero> getAllInSquad(int squadId) {
-        return null;
+        try(Connection con = sql2o.open()){
+            return con.createQuery("SELECT * FROM heros WHERE squadId = :squadId") //raw sql
+                    .addParameter("squadId",squadId)
+                    .executeAndFetch(Hero.class); //fetch a list
+        }
     }
 
     @Override
@@ -41,7 +48,7 @@ public class Sql2oHeroDao  implements herosDao {
             return (int)  con.createQuery(sql, true)
                     .addParameter("name",hero.getName())
                     .addParameter("age",hero.getAge())
-                    .addParameter("squadId",hero.getSquadId())
+                    .addParameter("squadId",hero.getSquadId()==0?null:hero.getSquadId())
                     .addParameter("powerId",hero.getPowerId())
                     .addParameter("weaknessId",hero.getWeaknessId())
                     .executeUpdate()
