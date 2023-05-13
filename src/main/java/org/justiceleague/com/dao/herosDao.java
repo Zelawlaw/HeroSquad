@@ -16,7 +16,7 @@ public interface herosDao {
     Hero findById(int id);
 
     // UPDATE
-    void update(int id, int powerId,int weaknessId);
+    void update(int id, int powerId, int weaknessId);
 
     // DELETE
     void deleteById(int id);

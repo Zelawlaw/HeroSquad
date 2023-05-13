@@ -1,6 +1,5 @@
 package org.justiceleague.com.dao;
 
-import org.justiceleague.com.models.Hero;
 import org.justiceleague.com.models.Power;
 
 import java.util.List;
@@ -17,7 +16,7 @@ public interface powersDao {
     Power findById(int id);
 
     // UPDATE
-    void update(int id, String name,String description);
+    void update(int id, String name, String description);
 
     // DELETE
     void deleteById(int id);

@@ -18,7 +18,7 @@ public interface squadDao {
     Power findById(int id);
 
     // UPDATE
-    void update(int id, String name,String cause);
+    void update(int id, String name, String cause);
 
     // DELETE
     void deleteById(int id);
