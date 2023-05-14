@@ -16,9 +16,10 @@ public class Sql2oWeaknessDao implements WeaknessesDao {
 
     private final Sql2o sql2o;
     private final Logger logger = LoggerFactory.getLogger("WeaknessDao");
+
     @Override
     public List<Weakness> getAll() {
-        try(Connection con = sql2o.open()){
+        try (Connection con = sql2o.open()) {
             return con.createQuery("SELECT * FROM weaknesses") //raw sql
                     .executeAndFetch(Weakness.class); //fetch a list
         }
@@ -28,8 +29,8 @@ public class Sql2oWeaknessDao implements WeaknessesDao {
     public int add(Weakness weakness) {
 
         String sql = "INSERT INTO weaknesses (name,description) VALUES (:name,:description)"; //raw sql
-        try(Connection con = sql2o.open()){ //try to open a connection
-       return (int)  con.createQuery(sql, true)
+        try (Connection con = sql2o.open()) { //try to open a connection
+            return (int) con.createQuery(sql, true)
                     .bind(weakness)
                     .executeUpdate()
                     .getKey();
@@ -38,9 +39,9 @@ public class Sql2oWeaknessDao implements WeaknessesDao {
 
     @Override
     public Weakness findById(int id) {
-        try(Connection con = sql2o.open()){
+        try (Connection con = sql2o.open()) {
             return con.createQuery("SELECT * FROM weaknesses WHERE id=:id") //raw sql
-                    .addParameter("id",id)
+                    .addParameter("id", id)
                     .executeAndFetchFirst(Weakness.class); //fetch a list
         }
     }
@@ -48,11 +49,11 @@ public class Sql2oWeaknessDao implements WeaknessesDao {
     @Override
     public void update(int id, String name, String description) {
         String sql = "UPDATE weaknesses SET name = :name, description = :description WHERE id=:id";
-        try(Connection con = sql2o.open().createQuery(sql)
+        try (Connection con = sql2o.open().createQuery(sql)
                 .addParameter("id", id)
-                .addParameter("name",name)
-                .addParameter("description",description)
-                .executeUpdate()){
+                .addParameter("name", name)
+                .addParameter("description", description)
+                .executeUpdate()) {
 
         } catch (Sql2oException ex) {
             System.out.println(ex);
@@ -60,10 +61,10 @@ public class Sql2oWeaknessDao implements WeaknessesDao {
     }
 
     @Override
-    public void deleteById(int id) throws Sql2oException{
+    public void deleteById(int id) throws Sql2oException {
 
         String sql = "DELETE FROM weaknesses WHERE id=:id";
-        try(Connection con = sql2o.open()){
+        try (Connection con = sql2o.open()) {
             con.createQuery(sql)
                     .addParameter("id", id)
                     .executeUpdate();

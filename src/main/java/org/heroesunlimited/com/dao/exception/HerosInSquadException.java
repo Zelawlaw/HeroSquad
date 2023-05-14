@@ -1,8 +1,8 @@
 package org.heroesunlimited.com.dao.exception;
 
-public class HerosInSquadException extends  Exception{
+public class HerosInSquadException extends Exception {
 
-    HerosInSquadException(String error){
+    HerosInSquadException(String error) {
         super(error);
     }
 }
