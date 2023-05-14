@@ -3,6 +3,8 @@ package org.heroesunlimited.com.dao.impl;
 import lombok.RequiredArgsConstructor;
 import org.heroesunlimited.com.dao.PowersDao;
 import org.heroesunlimited.com.models.Power;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 import org.sql2o.Sql2oException;
@@ -12,6 +14,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class Sql2oPowerDao implements PowersDao {
 
+    private final Logger logger = LoggerFactory.getLogger("PowerDao");
     private final Sql2o sql2o;
     @Override
     public List<Power> getAll() {
@@ -57,20 +60,16 @@ public class Sql2oPowerDao implements PowersDao {
     }
 
     @Override
-    public void deleteById(int id) {
+    public void deleteById(int id) throws Sql2oException{
 
         String sql = "DELETE FROM powers WHERE id=:id";
         try(Connection con = sql2o.open()){
             con.createQuery(sql)
                     .addParameter("id", id)
                     .executeUpdate();
-        } catch (Sql2oException ex) {
-            System.out.println(ex);
         }
-    }
-
-    @Override
-    public void clearAllPowers() {
 
     }
+
+
 }

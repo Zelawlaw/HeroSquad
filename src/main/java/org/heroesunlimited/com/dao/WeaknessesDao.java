@@ -22,5 +22,5 @@ public interface WeaknessesDao {
     // DELETE
     void deleteById(int id);
 
-    void clearAllWeaknesses();
+
 }

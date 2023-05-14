@@ -1,18 +1,28 @@
 package org.heroesunlimited.com.dao.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.heroesunlimited.com.dao.HerosDao;
+import org.heroesunlimited.com.dao.PowersDao;
 import org.heroesunlimited.com.dao.SquadDao;
+import org.heroesunlimited.com.models.Hero;
 import org.heroesunlimited.com.models.Squad;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 import org.sql2o.Sql2oException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
 public class Sql2oSquadDao implements SquadDao {
 
     private final Sql2o sql2o;
+    private HerosDao herosDao;
+    private final Logger logger = LoggerFactory.getLogger("SquadDao");
+
+
     @Override
     public List<Squad> getAll() {
         try(Connection con = sql2o.open()){
@@ -58,7 +68,18 @@ public class Sql2oSquadDao implements SquadDao {
 
     @Override
     public void deleteById(int id) {
-
+        //first get all Heros in squad
+       herosDao = new Sql2oHeroDao(sql2o);
+        List<Hero> herosinsquad = new ArrayList<>();
+        if(herosDao.getAllInSquad(id) !=null)
+        {
+            herosinsquad=herosDao.getAllInSquad(id);
+        }
+        // reset heros squad 0 ( no squad)
+        for(Hero hero: herosinsquad){
+            herosDao.update(hero.getId(),0,hero.getPowerId(),hero.getWeaknessId());
+        }
+        //Then delete squad
         String sql = "DELETE FROM squads WHERE id=:id";
         try(Connection con = sql2o.open()){
             con.createQuery(sql)
@@ -69,8 +90,5 @@ public class Sql2oSquadDao implements SquadDao {
         }
     }
 
-    @Override
-    public void clearAllSquads() {
 
-    }
 }

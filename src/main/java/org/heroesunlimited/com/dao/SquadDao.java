@@ -22,5 +22,5 @@ public interface SquadDao {
     // DELETE
     void deleteById(int id);
 
-    void clearAllSquads();
+
 }

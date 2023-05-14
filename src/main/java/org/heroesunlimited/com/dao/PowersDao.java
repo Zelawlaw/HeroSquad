@@ -21,5 +21,5 @@ public interface PowersDao {
     // DELETE
     void deleteById(int id);
 
-    void clearAllPowers();
+
 }

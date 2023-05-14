@@ -3,6 +3,8 @@ package org.heroesunlimited.com.dao.impl;
 import lombok.RequiredArgsConstructor;
 import org.heroesunlimited.com.dao.WeaknessesDao;
 import org.heroesunlimited.com.models.Weakness;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 import org.sql2o.Sql2oException;
@@ -13,6 +15,7 @@ import java.util.List;
 public class Sql2oWeaknessDao implements WeaknessesDao {
 
     private final Sql2o sql2o;
+    private final Logger logger = LoggerFactory.getLogger("WeaknessDao");
     @Override
     public List<Weakness> getAll() {
         try(Connection con = sql2o.open()){
@@ -57,20 +60,15 @@ public class Sql2oWeaknessDao implements WeaknessesDao {
     }
 
     @Override
-    public void deleteById(int id) {
+    public void deleteById(int id) throws Sql2oException{
 
         String sql = "DELETE FROM weaknesses WHERE id=:id";
         try(Connection con = sql2o.open()){
             con.createQuery(sql)
                     .addParameter("id", id)
                     .executeUpdate();
-        } catch (Sql2oException ex) {
-            System.out.println(ex);
         }
     }
 
-    @Override
-    public void clearAllWeaknesses() {
 
-    }
 }

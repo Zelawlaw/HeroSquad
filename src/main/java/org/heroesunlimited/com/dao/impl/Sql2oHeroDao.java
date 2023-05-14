@@ -3,6 +3,8 @@ package org.heroesunlimited.com.dao.impl;
 import lombok.RequiredArgsConstructor;
 import org.heroesunlimited.com.dao.HerosDao;
 import org.heroesunlimited.com.models.Hero;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 import org.sql2o.Sql2oException;
@@ -13,6 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class Sql2oHeroDao  implements HerosDao {
 
+    private final Logger logger = LoggerFactory.getLogger("HeroDao");
     private final Sql2o sql2o;
 
     @Override
@@ -51,10 +54,12 @@ public class Sql2oHeroDao  implements HerosDao {
                     .executeAndFetch(Hero.class); //fetch a list
         }
         catch(Exception Ex){
-            System.out.println("");
+            logger.error(Ex.getMessage(),Ex);
         }
         finally{
-           con.close();
+            if(con != null) {
+                con.close();
+            }
         }
      return heros;
     }
@@ -116,7 +121,7 @@ public class Sql2oHeroDao  implements HerosDao {
                     .addParameter("id", id)
                     .executeUpdate();
         } catch (Sql2oException ex) {
-            System.out.println(ex);
+            logger.error(ex.getMessage(),ex);
         }
     }
 
@@ -127,7 +132,7 @@ public class Sql2oHeroDao  implements HerosDao {
             con.createQuery(sql)
                     .executeUpdate();
         } catch (Sql2oException ex) {
-            System.out.println(ex);
+            logger.error(ex.getMessage(),ex);
         }
     }
 }
