@@ -4,7 +4,7 @@ import org.heroesunlimited.com.models.Power;
 
 import java.util.List;
 
-public interface powersDao {
+public interface PowersDao {
 
     // LIST
     List<Power> getAll();

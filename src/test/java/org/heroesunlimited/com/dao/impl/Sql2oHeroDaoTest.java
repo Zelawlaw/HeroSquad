@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class Sql2oHeroDaoTest {
+ class Sql2oHeroDaoTest {
 
     private static final List<Integer> herosCreatedinTest = new ArrayList<>();
     private static final List<Integer> powersCreatedinTest = new ArrayList<>();
@@ -138,6 +138,33 @@ public class Sql2oHeroDaoTest {
     }
 
     @Test
+    void testGetAllHerosWithPower(){
+        Hero hero1 = new Hero("superman",30,powerId1,weaknessId1);
+        hero1.setSquadId(squadId1);
+        Hero hero2 = new Hero("batman",35,powerId1,weaknessId2);
+        hero2.setSquadId(squadId2);
+        Hero hero3 = new Hero("wonderwoman",25,powerId3,weaknessId3);
+        hero3.setSquadId(squadId1);
+        herosCreatedinTest.add(heroDao.add(hero1));
+        herosCreatedinTest.add(heroDao.add(hero2));
+        herosCreatedinTest.add(heroDao.add(hero3));
+        assertEquals(2,heroDao.getAllWithPower(powerId1).size());
+    }
+
+    @Test
+    void testGetAllHerosWithWeakness(){
+        Hero hero1 = new Hero("superman",30,powerId1,weaknessId1);
+        hero1.setSquadId(squadId1);
+        Hero hero2 = new Hero("batman",35,powerId1,weaknessId1);
+        hero2.setSquadId(squadId2);
+        Hero hero3 = new Hero("wonderwoman",25,powerId3,weaknessId3);
+        hero3.setSquadId(squadId1);
+        herosCreatedinTest.add(heroDao.add(hero1));
+        herosCreatedinTest.add(heroDao.add(hero2));
+        herosCreatedinTest.add(heroDao.add(hero3));
+        assertEquals(1,heroDao.getAllWithWeakness(weaknessId3).size());
+    }
+    @Test
     void testGetAllHerosNotInSquad(){
         Hero hero1 = new Hero("superman",30,powerId1,weaknessId1);
         Hero hero2 = new Hero("batman",35,powerId2,weaknessId2);
@@ -175,12 +202,29 @@ public class Sql2oHeroDaoTest {
      }
 
     @Test
-    void testDeleteHero(){
+    void testDeleteHero() {
         Hero hero = new Hero("WonderWoman",25,powerId3,weaknessId3);
         int id = heroDao.add(hero);
         herosCreatedinTest.add(id);
         heroDao.deleteById(id);
         assertEquals(0,heroDao.getAll().size());
+    }
+
+    @Test
+    void testDeleteAllHeroes() {
+        Hero hero1 = new Hero("superman",30,powerId1,weaknessId1);
+        Hero hero2 = new Hero("batman",35,powerId2,weaknessId2);
+        hero2.setSquadId(squadId2);
+        Hero hero3 = new Hero("wonderwoman",25,powerId3,weaknessId3);
+        hero3.setSquadId(squadId1);
+
+        herosCreatedinTest.add(heroDao.add(hero1));
+        herosCreatedinTest.add(heroDao.add(hero2));
+        herosCreatedinTest.add(heroDao.add(hero3));
+
+        heroDao.clearAllHeros();
+        assertEquals(0,heroDao.getAll().size());
+
     }
 
 

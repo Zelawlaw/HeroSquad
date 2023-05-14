@@ -4,7 +4,7 @@ import org.heroesunlimited.com.models.Squad;
 
 import java.util.List;
 
-public interface squadDao {
+public interface SquadDao {
 
 
     // LIST

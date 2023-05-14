@@ -4,7 +4,7 @@ import org.heroesunlimited.com.models.Weakness;
 
 import java.util.List;
 
-public interface weaknessesDao {
+public interface WeaknessesDao {
 
 
     // LIST

@@ -1,16 +1,17 @@
 package org.heroesunlimited.com.dao.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.heroesunlimited.com.dao.herosDao;
+import org.heroesunlimited.com.dao.HerosDao;
 import org.heroesunlimited.com.models.Hero;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 import org.sql2o.Sql2oException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
-public class Sql2oHeroDao  implements herosDao {
+public class Sql2oHeroDao  implements HerosDao {
 
     private final Sql2o sql2o;
 
@@ -41,12 +42,30 @@ public class Sql2oHeroDao  implements herosDao {
 
     @Override
     public List<Hero> getAllWithPower(int powerId) {
-        return null;
+        Connection con = null;
+        List<Hero> heros = new ArrayList<>();
+        try{
+            con = sql2o.open();
+            heros= con.createQuery("SELECT * FROM heros WHERE powerId = :powerId") //raw sql
+                    .addParameter("powerId",powerId)
+                    .executeAndFetch(Hero.class); //fetch a list
+        }
+        catch(Exception Ex){
+            System.out.println("");
+        }
+        finally{
+           con.close();
+        }
+     return heros;
     }
 
     @Override
     public List<Hero> getAllWithWeakness(int weaknessId) {
-        return null;
+        try(Connection con = sql2o.open()){
+            return con.createQuery("SELECT * FROM heros WHERE weaknessId = :weaknessId") //raw sql
+                    .addParameter("weaknessId",weaknessId)
+                    .executeAndFetch(Hero.class); //fetch a list
+        }
     }
 
     @Override
@@ -103,6 +122,12 @@ public class Sql2oHeroDao  implements herosDao {
 
     @Override
     public void clearAllHeros() {
-
+        String sql = "DELETE FROM heros";
+        try(Connection con = sql2o.open()){
+            con.createQuery(sql)
+                    .executeUpdate();
+        } catch (Sql2oException ex) {
+            System.out.println(ex);
+        }
     }
 }

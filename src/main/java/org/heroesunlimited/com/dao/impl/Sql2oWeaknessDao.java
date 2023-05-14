@@ -1,7 +1,7 @@
 package org.heroesunlimited.com.dao.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.heroesunlimited.com.dao.weaknessesDao;
+import org.heroesunlimited.com.dao.WeaknessesDao;
 import org.heroesunlimited.com.models.Weakness;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
@@ -10,7 +10,7 @@ import org.sql2o.Sql2oException;
 import java.util.List;
 
 @RequiredArgsConstructor
-public class Sql2oWeaknessDao implements weaknessesDao {
+public class Sql2oWeaknessDao implements WeaknessesDao {
 
     private final Sql2o sql2o;
     @Override
@@ -45,12 +45,12 @@ public class Sql2oWeaknessDao implements weaknessesDao {
     @Override
     public void update(int id, String name, String description) {
         String sql = "UPDATE weaknesses SET name = :name, description = :description WHERE id=:id";
-        try(Connection con = sql2o.open()){
-            con.createQuery(sql)
-                    .addParameter("id", id)
-                    .addParameter("name",name)
-                    .addParameter("description",description)
-                    .executeUpdate();
+        try(Connection con = sql2o.open().createQuery(sql)
+                .addParameter("id", id)
+                .addParameter("name",name)
+                .addParameter("description",description)
+                .executeUpdate()){
+
         } catch (Sql2oException ex) {
             System.out.println(ex);
         }

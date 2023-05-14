@@ -4,7 +4,7 @@ import org.heroesunlimited.com.models.Hero;
 
 import java.util.List;
 
-public interface herosDao {
+public interface HerosDao {
 
     // LIST ALL
     List<Hero> getAll();

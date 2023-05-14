@@ -1,7 +1,7 @@
 package org.heroesunlimited.com.dao.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.heroesunlimited.com.dao.powersDao;
+import org.heroesunlimited.com.dao.PowersDao;
 import org.heroesunlimited.com.models.Power;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
@@ -10,7 +10,7 @@ import org.sql2o.Sql2oException;
 import java.util.List;
 
 @RequiredArgsConstructor
-public class Sql2oPowerDao implements powersDao {
+public class Sql2oPowerDao implements PowersDao {
 
     private final Sql2o sql2o;
     @Override
