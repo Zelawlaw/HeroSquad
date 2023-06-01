@@ -16,7 +16,8 @@ $(document).ready(function() {
         var href = $(this).attr('href');
    var $tabs = $('.nav-tabs li ');
           $tabs.not(this).removeClass('active');
-          $(this).toggleClass('selected').removeClass('hover');
+                  $tabs.removeClass('selected');
+                  $(this).parent().addClass('selected').removeClass('hover');
 //        if (href !== '#') {
 //            // Allow normal behavior for non-empty href
 //            return;
