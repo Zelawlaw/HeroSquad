@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{#block "title"}}Hero Squads{{/block}}</title>
+
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css'>
+</head>
+<body>
+<ul class="nav nav-tabs">
+    <li role="presentation" class="active"><a href="/">Home</a></li>
+    <li role="presentation"><a href="/heroes">All Heros</a></li>
+    <li role="presentation"><a href="/heroes/new">Add a Hero</a></li>
+    <li role="presentation"><a href="/squads">All Squads</a></li>
+    <li role="presentation"><a href="/squads/new">Add a Squad</a></li>
+    <li role="presentation"><a href="/powers">All Powers</a></li>
+    <li role="presentation"><a href="/powers/new">Add a Power</a></li>
+    <li role="presentation"><a href="/weaknesses">All Weaknesses</a></li>
+    <li role="presentation"><a href="/weaknesses/new">Add a Weakness</a></li>
+</ul>
+<div class="container">
+    <!--begin main template-->
+    <div class="page-header">
+        <img src="/images/heroes.jpeg" width="50%">
+        <h1>Welcome To the World of Heroes!</h1>
+    </div>
+
+    <div class="col-md-12">
+        {{#block "content"}}
+        {{/block}}
+
+    </div>
+</div>
+<!--end main template-->
+{{#block "footer"}}
+    </body>
+    </html>
+{{/block}}
