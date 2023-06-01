@@ -38,6 +38,15 @@ public class App {
         // show home page
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
+            //count of total heroes
+            List<Hero> heros = herosDao.getAll();
+            List<Hero> herosnotinsquad = herosDao.getAllNotInSquad();
+            List<Squad> squads = squadDao.getAll();
+
+            model.put("heroesWithoutSquads",herosnotinsquad);
+            model.put("squads",squads);
+            model.put("totalHeros",heros.size());
+
             return new HandlebarsTemplateEngine().render(new ModelAndView(model, "index.hbs"));
         });
 

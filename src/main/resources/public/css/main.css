@@ -2,6 +2,7 @@ body {
     position: relative;
     background: url('/images/heroes.jpeg') no-repeat center center fixed;
     background-size: cover;
+    color: #fff;
 }
 
 body::before {
