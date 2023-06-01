@@ -87,5 +87,14 @@ public class Sql2oSquadDao implements SquadDao {
         }
     }
 
+    @Override
+    public Squad findByname(String squadname) {
+        try (Connection con = sql2o.open()) {
+            return con.createQuery("SELECT * FROM squads WHERE name=:name") //raw sql
+                    .addParameter("name", squadname)
+                    .executeAndFetchFirst(Squad.class); //fetch a list
+        }
+    }
+
 
 }

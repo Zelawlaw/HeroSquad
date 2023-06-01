@@ -65,8 +65,10 @@ class Sql2oWeaknessDaoTest {
         Weakness weakness = new Weakness("Water weakness", "unable to function in water");
         int Id = weaknessDao.add(weakness);
         Weakness fetchedWeakness = weaknessDao.findById(Id);
+        Weakness fetchedWeakness2 = weaknessDao.findByName(weakness.getName());
         weaknessesCreatedinTest.add(fetchedWeakness);
         assertEquals(Id, fetchedWeakness.getId());
+        assertEquals(weakness.getName(),fetchedWeakness2.getName());
 
     }
 

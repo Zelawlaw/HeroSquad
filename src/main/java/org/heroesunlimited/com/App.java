@@ -9,6 +9,7 @@ import org.heroesunlimited.com.dao.impl.Sql2oHeroDao;
 import org.heroesunlimited.com.dao.impl.Sql2oPowerDao;
 import org.heroesunlimited.com.dao.impl.Sql2oSquadDao;
 import org.heroesunlimited.com.dao.impl.Sql2oWeaknessDao;
+import org.heroesunlimited.com.exceptions.DataNotFoundException;
 import org.heroesunlimited.com.models.Hero;
 import org.heroesunlimited.com.models.Power;
 import org.heroesunlimited.com.models.Squad;
@@ -60,15 +61,63 @@ public class App {
 
         // get add hero form
         get("/heroes/new", (req, res) -> {
+
             Map<String, Object> model = new HashMap<>();
-            // Code to retrieve necessary data for the form (e.g., squads, powers, weaknesses)
-            return new HandlebarsTemplateEngine().render(new ModelAndView(model, "heroForm.hbs"));
+            try {
+
+                List<Power> powers = powersDao.getAll();
+                List<Weakness> weaknesses = weaknessesDao.getAll();
+
+                if (powers.isEmpty()) {
+                    throw new DataNotFoundException("No Powers Found! Please create one!");
+                }
+
+                if (weaknesses.isEmpty()) {
+                    throw new DataNotFoundException("No Weaknesses Found! Please create one!");
+                }
+
+
+            }  catch(DataNotFoundException  ex){
+
+                model.put("errorMessage",ex.getMessage());
+            }
+
+            return new HandlebarsTemplateEngine().render(new ModelAndView(model, "heroes.hbs"));
+
         });
 
         // add hero hero
         post("/heroes/new", (req, res) -> {
-            // Code to handle hero form submission
-            res.redirect("/heroes");
+            //check if powers and weaknesses are present
+
+               String heroname = req.queryParams("name");
+               Integer age = Integer.valueOf(req.queryParams("age"));
+               String weaknessname = req.queryParams("weakness");
+               String powername = req.queryParams("power");
+               String squadname = req.queryParams("squad");
+               Squad squad = null;
+               // find entities
+               Power power = powersDao.findByName(powername);
+               Weakness weakness = weaknessesDao.findByName(weaknessname);
+               if (squadname.length() > 0) {
+                   squad = squadDao.findByname(squadname);
+               }
+
+               //create Hero object and save
+
+               Hero newHero = new Hero(heroname, age, power.getId(), weakness.getId());
+
+               if (squad != null) {
+                   newHero.setSquadId(squad.getId());
+               }
+
+               //save new hero
+
+               herosDao.add(newHero);
+
+               res.redirect("/heroes");
+
+
             return null;
         });
 
@@ -154,7 +203,11 @@ public class App {
 
         // add  a power
         post("/powers/new", (req, res) -> {
-            // Code to handle power form submission
+
+            String name = req.queryParams("name");
+            String description  = req.queryParams("description");
+
+            powersDao.add(new Power(name,description));
             res.redirect("/powers");
             return null;
         });
@@ -198,7 +251,10 @@ public class App {
 
         // add a weakness
         post("/weaknesses/new", (req, res) -> {
-            // Code to handle weakness form submission
+            String name = req.queryParams("name");
+            String description  = req.queryParams("description");
+
+            weaknessesDao.add(new Weakness(name,description));
             res.redirect("/weaknesses");
             return null;
         });

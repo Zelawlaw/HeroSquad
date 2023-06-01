@@ -72,5 +72,14 @@ public class Sql2oPowerDao implements PowersDao {
 
     }
 
+    @Override
+    public Power findByName(String powername) {
+        try (Connection con = sql2o.open()) {
+            return con.createQuery("SELECT * FROM powers WHERE name=:name") //raw sql
+                    .addParameter("name", powername)
+                    .executeAndFetchFirst(Power.class); //fetch a list
+        }
+    }
+
 
 }

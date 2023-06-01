@@ -23,4 +23,5 @@ public interface WeaknessesDao {
     void deleteById(int id);
 
 
+    Weakness findByName(String weaknessname);
 }

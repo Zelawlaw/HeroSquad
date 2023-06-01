@@ -23,4 +23,5 @@ public interface SquadDao {
     void deleteById(int id);
 
 
+    Squad findByname(String squadname);
 }

@@ -2,8 +2,69 @@
 
 
 {{#partial "content"}}
+    {{#if errorMessage}}
+        <div class="error-message">{{errorMessage}}</div>
+    {{/if}}
 
+    {{#if editHero}}
+        <h1>Edit Hero Details for {{editHero.name}}</h1>
+        <form action="/heros/{{editHero.id}}/update" method="post">
+            <label for="age">Age</label>
+            <input id="age" name="age" type="number" value="{{editHero.age}}">
 
+            <label for="power">Power</label>
+            <select id="power" name="power">
+                {{#each powers}}
+                    <option value="{{name}}" >{{name}}</option>
+                {{/each}}
+            </select>
+
+            <label for="weakness">Weakness</label>
+            <select id="weakness" name="weakness">
+                {{#each weaknesses}}
+                    <option value="{{name}}" >{{name}}</option>
+                {{/each}}
+            </select>
+
+            <label for="squad">Squad</label>
+            <select id="squad" name="squad">
+                {{#each squads}}
+                    <option value="{{name}}" >{{name}}</option>
+                {{/each}}
+            </select>
+
+    {{else}}
+            <h1>Add a new Hero!</h1>
+        <form action="/heros/new" method="post">
+            <label for="age">Age</label>
+            <input id="age" name="age" type="number">
+
+            <label for="power">Power</label>
+            <select id="power" name="power">
+                {{#each powers}}
+                    <option value="{{name}}">{{name}}</option>
+                {{/each}}
+            </select>
+
+            <label for="weakness">Weakness</label>
+            <select id="weakness" name="weakness">
+                {{#each weaknesses}}
+                    <option value="{{name}}">{{name}}</option>
+                {{/each}}
+            </select>
+
+            <label for="squad">Squad</label>
+            <select id="squad" name="squad">
+                {{#each squads}}
+                    <option value="{{name}}">{{name}}</option>
+                {{/each}}
+            </select>
+
+    {{/if}}
+
+        <button type="submit" class="btn btn-default">Go!</button>
+    </form>
 {{/partial}}
+
 
 {{> layout.hbs}}

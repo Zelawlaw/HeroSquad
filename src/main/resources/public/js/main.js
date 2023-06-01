@@ -18,10 +18,10 @@ $(document).ready(function() {
           $tabs.not(this).removeClass('active');
                   $tabs.removeClass('selected');
                   $(this).parent().addClass('selected').removeClass('hover');
-//        if (href !== '#') {
-//            // Allow normal behavior for non-empty href
-//            return;
-//        }
+        if (href !== '#') {
+            // Allow normal behavior for non-empty href
+            return;
+        }
         e.preventDefault();
 
     });

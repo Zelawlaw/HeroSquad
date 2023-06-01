@@ -71,5 +71,14 @@ public class Sql2oWeaknessDao implements WeaknessesDao {
         }
     }
 
+    @Override
+    public Weakness findByName(String weaknessname) {
+        try (Connection con = sql2o.open()) {
+            return con.createQuery("SELECT * FROM weaknesses WHERE name=:name") //raw sql
+                    .addParameter("name", weaknessname)
+                    .executeAndFetchFirst(Weakness.class); //fetch a list
+        }
+    }
+
 
 }

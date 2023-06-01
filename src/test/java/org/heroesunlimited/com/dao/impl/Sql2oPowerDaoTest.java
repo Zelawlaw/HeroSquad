@@ -76,9 +76,10 @@ class Sql2oPowerDaoTest {
         Power power = new Power("Laser vision", "shoot lasers from eyes");
         int Id = powerDao.add(power);
         Power fetchedPower = powerDao.findById(Id);
+        Power fectedPower2 = powerDao.findByName(power.getName());
         powersCreatedinTest.add(fetchedPower);
         assertEquals(Id, fetchedPower.getId());
-
+        assertEquals(power.getName(),fectedPower2.getName());
     }
 
     @Test
