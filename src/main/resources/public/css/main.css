@@ -1,5 +1,5 @@
 
-input {
+input ,select {
   background-color: black;
   color: white;
 }
@@ -24,6 +24,10 @@ body::before {
 
 .container {
     background-color: transparent;
+}
+
+.transparent {
+background-color: transparent;
 }
 
 .page-header {

@@ -75,14 +75,16 @@ public class App {
                 if (weaknesses.isEmpty()) {
                     throw new DataNotFoundException("No Weaknesses Found! Please create one!");
                 }
-
+              model.put("powers",powers);
+              model.put("weaknesses",weaknesses);
 
             }  catch(DataNotFoundException  ex){
 
                 model.put("errorMessage",ex.getMessage());
             }
 
-            return new HandlebarsTemplateEngine().render(new ModelAndView(model, "heroes.hbs"));
+
+            return new HandlebarsTemplateEngine().render(new ModelAndView(model, "heroForm.hbs"));
 
         });
 
@@ -99,7 +101,7 @@ public class App {
                // find entities
                Power power = powersDao.findByName(powername);
                Weakness weakness = weaknessesDao.findByName(weaknessname);
-               if (squadname.length() > 0) {
+               if (squadname != null) {
                    squad = squadDao.findByname(squadname);
                }
 
