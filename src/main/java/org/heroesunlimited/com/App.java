@@ -67,6 +67,7 @@ public class App {
 
                 List<Power> powers = powersDao.getAll();
                 List<Weakness> weaknesses = weaknessesDao.getAll();
+                List<Squad> squads = squadDao.getAll();
 
                 if (powers.isEmpty()) {
                     throw new DataNotFoundException("No Powers Found! Please create one!");
@@ -77,6 +78,10 @@ public class App {
                 }
               model.put("powers",powers);
               model.put("weaknesses",weaknesses);
+
+              if(!squads.isEmpty()) {
+                  model.put("squads",squads);
+              }
 
             }  catch(DataNotFoundException  ex){
 
@@ -157,14 +162,17 @@ public class App {
         // show add squad form
         get("/squads/new", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            // Code to retrieve necessary data for the form
+
             return new HandlebarsTemplateEngine().render(new ModelAndView(model, "squadForm.hbs"));
         });
         // add squad
         post("/squads/new", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            // Code to retrieve necessary data for the form
-            return new HandlebarsTemplateEngine().render(new ModelAndView(model, "squadForm.hbs"));
+            String name = req.queryParams("name");
+            String cause = req.queryParams("cause");
+            squadDao.add(new Squad(name,cause));
+            res.redirect("/squads");
+            return null;
         });
 
         get("/squads/:id", (req, res) -> {

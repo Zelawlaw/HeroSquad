@@ -1,25 +1,26 @@
-
-
-
 {{#partial "content"}}
-
     {{#if editPower}}
         <h1>Edit Description for {{editPower.name}}</h1>
         <form action="/powers/{{editPower.id}}/update" method="post">
-            <label for="description">description</label>
-            <input id="description" name="description" type="text" value="{{editPower.description}}">
+            <div class="form-group">
+                <label for="description">Description</label>
+                <input id="description" name="description" type="text" value="{{editPower.description}}" class="form-control" style="width: 50%;">
+            </div>
     {{else}}
             <h1>Add a new Power!</h1>
         <form action="/powers/new" method="post">
-            <label for="name">name</label>
-            <input id="name" name="name" type="text">
-            <label for="description">description</label>
-            <input id="description" name="description" type="text"">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input id="name" name="name" type="text" class="form-control" style="width: 50%;">
+            </div>
+            <div class="form-group">
+                <label for="description">Description</label>
+                <input id="description" name="description" type="text" class="form-control" style="width: 50%;">
+            </div>
     {{/if}}
 
         <button type="submit" class="btn btn-default">Go!</button>
     </form>
-
 {{/partial}}
 
 {{> layout.hbs}}

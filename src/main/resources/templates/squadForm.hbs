@@ -3,7 +3,28 @@
 
 {{#partial "content"}}
 
+    {{#if editSquad}}
+        <h1>Edit cause for {{editSquad.name}}</h1>
+        <form action="/squads/{{editSquad.id}}/update" method="post">
+            <div class="form-group">
+                <label for="cause">Cause</label>
+                <input id="cause" name="cause" type="text" value="{{editSquad.cause}}" class="form-control" style="width: 50%;">
+            </div>
+    {{else}}
+            <h1>Add a new Squad!</h1>
+        <form action="/squads/new" method="post">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input id="name" name="name" type="text" class="form-control" style="width: 50%;">
+            </div>
+            <div class="form-group">
+                <label for="cause">Cause</label>
+                <input id="cause" name="cause" type="text" class="form-control" style="width: 50%;">
+            </div>
+    {{/if}}
 
+        <button type="submit" class="btn btn-default">Go!</button>
+    </form>
 {{/partial}}
 
 {{> layout.hbs}}

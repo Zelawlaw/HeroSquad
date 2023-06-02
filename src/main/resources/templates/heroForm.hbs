@@ -1,74 +1,88 @@
-
-
-
 {{#partial "content"}}
-    {{#if errorMessage}}
-        <div class="error-message">{{errorMessage}}</div>
-    {{/if}}
-
     {{#if editHero}}
         <h1>Edit Hero Details for {{editHero.name}}</h1>
         <form action="/heros/{{editHero.id}}/update" method="post">
-
-            <label for="age">Age</label>
-            <input id="age" name="age" type="number" value="{{editHero.age}}">
-            <label for="power">Power</label>
-            <select id="power" name="power">
-                {{#each powers}}
-                    <option value="{{name}}" >{{name}}</option>
-                {{/each}}
-            </select>
-
-            <label for="weakness">Weakness</label>
-            <select id="weakness" name="weakness">
-                {{#each weaknesses}}
-                    <option value="{{name}}" >{{name}}</option>
-                {{/each}}
-            </select>
-           {{#if squads}}
-            <label for="squad">Squad</label>
-            <select id="squad" name="squad">
-                {{#each squads}}
-                    <option value="{{name}}" >{{name}}</option>
-                {{/each}}
-            </select>
-           {{/if}}
+            <div class="form-group">
+                <label for="age">Age</label>
+                <input id="age" name="age" type="number" value="{{editHero.age}}" class="form-control" style="width: 20%;">
+            </div>
+            <div class="form-group">
+                <label for="power">Power</label>
+                <select id="power" name="power" class="form-control" style="width: 30%;">
+                    {{#each powers}}
+                        <option value="{{name}}">{{name}}</option>
+                    {{/each}}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="weakness">Weakness</label>
+                <select id="weakness" name="weakness" class="form-control" style="width: 30%;">
+                    {{#each weaknesses}}
+                        <option value="{{name}}">{{name}}</option>
+                    {{/each}}
+                </select>
+            </div>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" id="showSquad" onclick="toggleSquadForm()" {{#if squads}}checked{{/if}}> Show Squad
+                </label>
+            </div>
+            <div id="squadForm" style="display: none;">
+                <div class="form-group">
+                    <label for="squad">Squad</label>
+                    <select id="squad" name="squad" class="form-control" style="width: 30%;">
+                        {{#each squads}}
+                            <option value="{{name}}">{{name}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+            </div>
     {{else}}
             <h1>Add a new Hero!</h1>
         <form action="/heroes/new" method="post">
-            <label for="name">Name</label>
-            <input id="name" name="name" type="text">
-            <label for="age">Age</label>
-            <input id="age" name="age" type="number">
-
-            <label for="power">Power</label>
-            <select id="power" name="power">
-                {{#each powers}}
-                    <option value="{{name}}">{{name}}</option>
-                {{/each}}
-            </select>
-
-            <label for="weakness">Weakness</label>
-            <select id="weakness" name="weakness">
-                {{#each weaknesses}}
-                    <option value="{{name}}">{{name}}</option>
-                {{/each}}
-            </select>
-
-        {{#if squads}}
-                <label for="squad">Squad</label>
-                <select id="squad" name="squad">
-                    {{#each squads}}
-                        <option value="{{name}}" >{{name}}</option>
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input id="name" name="name" type="text" class="form-control" style="width: 50%;">
+            </div>
+            <div class="form-group">
+                <label for="age">Age</label>
+                <input id="age" name="age" type="number" class="form-control" style="width: 80%;">
+            </div>
+            <div class="form-group">
+                <label for="power">Power</label>
+                <select id="power" name="power" class="form-control" style="width: 30%;">
+                    {{#each powers}}
+                        <option value="{{name}}">{{name}}</option>
                     {{/each}}
                 </select>
-        {{/if}}
-
+            </div>
+            <div class="form-group">
+                <label for="weakness">Weakness</label>
+                <select id="weakness" name="weakness" class="form-control" style="width: 30%;">
+                    {{#each weaknesses}}
+                        <option value="{{name}}">{{name}}</option>
+                    {{/each}}
+                </select>
+            </div>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" id="showSquad" onclick="toggleSquadForm()" {{#if squads}}checked{{/if}}> Add to Squad
+                </label>
+            </div>
+            <div id="squadForm" style="display: none;">
+                <div class="form-group">
+                    <label for="squad">Squad</label>
+                    <select id="squad" name="squad" class="form-control" style="width: 30%;">
+                        {{#each squads}}
+                            <option value="{{name}}">{{name}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+            </div>
     {{/if}}
 
         <button type="submit" class="btn btn-default">Go!</button>
     </form>
 {{/partial}}
-
 
 {{> layout.hbs}}

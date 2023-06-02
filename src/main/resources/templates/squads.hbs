@@ -1,9 +1,19 @@
 
 
-
 {{#partial "content"}}
 
-
+    <div class="container">
+        <div class="row">
+            <h2>Available Squads</h2>
+            <ol class="display-list">
+                {{#each squads}}
+                    <li>
+                        {{name}}  -  {{cause}}
+                    </li>
+                {{/each}}
+            </ol>
+        </div>
+    </div>
 {{/partial}}
 
 {{> layout.hbs}}
