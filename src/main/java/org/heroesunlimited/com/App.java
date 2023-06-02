@@ -44,9 +44,9 @@ public class App {
             List<Hero> herosnotinsquad = herosDao.getAllNotInSquad();
             List<Squad> squads = squadDao.getAll();
 
-            model.put("heroesWithoutSquads",herosnotinsquad);
-            model.put("squads",squads);
-            model.put("totalHeros",heros.size());
+            model.put("heroesWithoutSquads", herosnotinsquad);
+            model.put("squads", squads);
+            model.put("totalHeros", heros.size());
 
             return new HandlebarsTemplateEngine().render(new ModelAndView(model, "index.hbs"));
         });
@@ -76,18 +76,16 @@ public class App {
                 if (weaknesses.isEmpty()) {
                     throw new DataNotFoundException("No Weaknesses Found! Please create one!");
                 }
-              model.put("powers",powers);
-              model.put("weaknesses",weaknesses);
+                model.put("powers", powers);
+                model.put("weaknesses", weaknesses);
 
-              if(!squads.isEmpty()) {
-                  model.put("squads",squads);
-              }
+                if (!squads.isEmpty()) {
+                    model.put("squads", squads);
+                }
 
-            }  catch(DataNotFoundException  ex){
-
-                model.put("errorMessage",ex.getMessage());
+            } catch (DataNotFoundException ex) {
+                model.put("errorMessage", ex.getMessage());
             }
-
 
             return new HandlebarsTemplateEngine().render(new ModelAndView(model, "heroForm.hbs"));
 
@@ -97,32 +95,32 @@ public class App {
         post("/heroes/new", (req, res) -> {
             //check if powers and weaknesses are present
 
-               String heroname = req.queryParams("name");
-               Integer age = Integer.valueOf(req.queryParams("age"));
-               String weaknessname = req.queryParams("weakness");
-               String powername = req.queryParams("power");
-               String squadname = req.queryParams("squad");
-               Squad squad = null;
-               // find entities
-               Power power = powersDao.findByName(powername);
-               Weakness weakness = weaknessesDao.findByName(weaknessname);
-               if (squadname != null) {
-                   squad = squadDao.findByname(squadname);
-               }
+            String heroname = req.queryParams("name");
+            Integer age = Integer.valueOf(req.queryParams("age"));
+            String weaknessname = req.queryParams("weakness");
+            String powername = req.queryParams("power");
+            String squadname = req.queryParams("squad");
+            Squad squad = null;
+            // find entities
+            Power power = powersDao.findByName(powername);
+            Weakness weakness = weaknessesDao.findByName(weaknessname);
+            if (squadname != null) {
+                squad = squadDao.findByname(squadname);
+            }
 
-               //create Hero object and save
+            //create Hero object and save
 
-               Hero newHero = new Hero(heroname, age, power.getId(), weakness.getId());
+            Hero newHero = new Hero(heroname, age, power.getId(), weakness.getId());
 
-               if (squad != null) {
-                   newHero.setSquadId(squad.getId());
-               }
+            if (squad != null) {
+                newHero.setSquadId(squad.getId());
+            }
 
-               //save new hero
+            //save new hero
 
-               herosDao.add(newHero);
+            herosDao.add(newHero);
 
-               res.redirect("/heroes");
+            res.redirect("/heroes");
 
 
             return null;
@@ -170,7 +168,7 @@ public class App {
             Map<String, Object> model = new HashMap<>();
             String name = req.queryParams("name");
             String cause = req.queryParams("cause");
-            squadDao.add(new Squad(name,cause));
+            squadDao.add(new Squad(name, cause));
             res.redirect("/squads");
             return null;
         });
@@ -215,9 +213,9 @@ public class App {
         post("/powers/new", (req, res) -> {
 
             String name = req.queryParams("name");
-            String description  = req.queryParams("description");
+            String description = req.queryParams("description");
 
-            powersDao.add(new Power(name,description));
+            powersDao.add(new Power(name, description));
             res.redirect("/powers");
             return null;
         });
@@ -262,9 +260,9 @@ public class App {
         // add a weakness
         post("/weaknesses/new", (req, res) -> {
             String name = req.queryParams("name");
-            String description  = req.queryParams("description");
+            String description = req.queryParams("description");
 
-            weaknessesDao.add(new Weakness(name,description));
+            weaknessesDao.add(new Weakness(name, description));
             res.redirect("/weaknesses");
             return null;
         });

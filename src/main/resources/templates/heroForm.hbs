@@ -4,7 +4,8 @@
         <form action="/heros/{{editHero.id}}/update" method="post">
             <div class="form-group">
                 <label for="age">Age</label>
-                <input id="age" name="age" type="number" value="{{editHero.age}}" class="form-control" style="width: 20%;">
+                <input id="age" name="age" type="number" value="{{editHero.age}}" class="form-control"
+                       style="width: 20%;">
             </div>
             <div class="form-group">
                 <label for="power">Power</label>
@@ -24,7 +25,8 @@
             </div>
             <div class="checkbox">
                 <label>
-                    <input type="checkbox" id="showSquad" onclick="toggleSquadForm()" {{#if squads}}checked{{/if}}> Show Squad
+                    <input type="checkbox" id="showSquad" onclick="toggleSquadForm()" {{#if squads}}checked{{/if}}> Show
+                    Squad
                 </label>
             </div>
             <div id="squadForm" style="display: none;">
@@ -66,7 +68,8 @@
             </div>
             <div class="checkbox">
                 <label>
-                    <input type="checkbox" id="showSquad" onclick="toggleSquadForm()" {{#if squads}}checked{{/if}}> Add to Squad
+                    <input type="checkbox" id="showSquad" onclick="toggleSquadForm()" {{#if squads}}checked{{/if}}> Add
+                    to Squad
                 </label>
             </div>
             <div id="squadForm" style="display: none;">
