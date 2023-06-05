@@ -1,0 +1,25 @@
+
+
+
+{{#partial "content"}}
+    {{#if editWeakness}}
+        <h1>Edit Description for {{editWeakness.name}}</h1>
+        <form action="/weaknesses/{{editWeakness.id}}/update" method="post">
+            <label for="description">description</label>
+            <input id="description" name="description" type="text" value="{{editWeakness.description}}">
+    {{else}}
+            <h1>Add a new Weakness!</h1>
+        <form action="/weaknesses/new" method="post">
+            <label for="name">name</label>
+            <input id="name" name="name" type="text">
+            <label for="description">description</label>
+            <input id="description" name="description" type="text"">
+    {{/if}}
+
+        <button type="submit" class="btn btn-default">Go!</button>
+    </form>
+
+
+{{/partial}}
+
+{{> layout.hbs}}

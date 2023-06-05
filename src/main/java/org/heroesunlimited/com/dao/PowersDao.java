@@ -22,4 +22,5 @@ public interface PowersDao {
     void deleteById(int id);
 
 
+    Power findByName(String powername);
 }

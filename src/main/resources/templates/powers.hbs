@@ -1,0 +1,18 @@
+{{#partial "content"}}
+    <div class="container">
+        <div class="row">
+            <h2>Available Powers</h2>
+            <ol class="display-list">
+                {{#each powers}}
+                    <li>
+                       {{name}}  -  {{description}}
+                    </li>
+                {{/each}}
+            </ol>
+        </div>
+    </div>
+{{/partial}}
+
+
+
+{{> layout.hbs}}

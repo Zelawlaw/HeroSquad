@@ -77,8 +77,10 @@ class Sql2oSquadDaoTest {
         Squad squad = new Squad("Guardians", "Universal peace");
         int Id = squadDao.add(squad);
         Squad fetchedSquad = squadDao.findById(Id);
+        Squad fetchedSquad2 = squadDao.findByname(squad.getName());
         squadsCreatedinTest.add(fetchedSquad);
         assertEquals(Id, fetchedSquad.getId());
+        assertEquals(squad.getName(),fetchedSquad2.getName());
 
     }
 

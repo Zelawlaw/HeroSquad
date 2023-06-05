@@ -8,9 +8,9 @@ public class Hero {
 
     private final String name;
     private final int age;
-    private int id;
-    private int squadId;
     private final int powerId;
     private final int weaknessId;
+    private int id;
+    private int squadId;
 }
 

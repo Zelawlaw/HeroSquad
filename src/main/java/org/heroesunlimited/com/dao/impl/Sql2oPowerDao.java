@@ -16,9 +16,10 @@ public class Sql2oPowerDao implements PowersDao {
 
     private final Logger logger = LoggerFactory.getLogger("PowerDao");
     private final Sql2o sql2o;
+
     @Override
     public List<Power> getAll() {
-        try(Connection con = sql2o.open()){
+        try (Connection con = sql2o.open()) {
             return con.createQuery("SELECT * FROM powers") //raw sql
                     .executeAndFetch(Power.class); //fetch a list
         }
@@ -28,8 +29,8 @@ public class Sql2oPowerDao implements PowersDao {
     public int add(Power power) {
 
         String sql = "INSERT INTO powers (name,description) VALUES (:name,:description)"; //raw sql
-        try(Connection con = sql2o.open()){ //try to open a connection
-       return (int)  con.createQuery(sql, true)
+        try (Connection con = sql2o.open()) { //try to open a connection
+            return (int) con.createQuery(sql, true)
                     .bind(power)
                     .executeUpdate()
                     .getKey();
@@ -38,9 +39,9 @@ public class Sql2oPowerDao implements PowersDao {
 
     @Override
     public Power findById(int id) {
-        try(Connection con = sql2o.open()){
+        try (Connection con = sql2o.open()) {
             return con.createQuery("SELECT * FROM powers WHERE id=:id") //raw sql
-                    .addParameter("id",id)
+                    .addParameter("id", id)
                     .executeAndFetchFirst(Power.class); //fetch a list
         }
     }
@@ -48,11 +49,11 @@ public class Sql2oPowerDao implements PowersDao {
     @Override
     public void update(int id, String name, String description) {
         String sql = "UPDATE powers SET name = :name, description = :description WHERE id=:id";
-        try(Connection con = sql2o.open()){
+        try (Connection con = sql2o.open()) {
             con.createQuery(sql)
                     .addParameter("id", id)
-                    .addParameter("name",name)
-                    .addParameter("description",description)
+                    .addParameter("name", name)
+                    .addParameter("description", description)
                     .executeUpdate();
         } catch (Sql2oException ex) {
             System.out.println(ex);
@@ -60,15 +61,24 @@ public class Sql2oPowerDao implements PowersDao {
     }
 
     @Override
-    public void deleteById(int id) throws Sql2oException{
+    public void deleteById(int id) throws Sql2oException {
 
         String sql = "DELETE FROM powers WHERE id=:id";
-        try(Connection con = sql2o.open()){
+        try (Connection con = sql2o.open()) {
             con.createQuery(sql)
                     .addParameter("id", id)
                     .executeUpdate();
         }
 
+    }
+
+    @Override
+    public Power findByName(String powername) {
+        try (Connection con = sql2o.open()) {
+            return con.createQuery("SELECT * FROM powers WHERE name=:name") //raw sql
+                    .addParameter("name", powername)
+                    .executeAndFetchFirst(Power.class); //fetch a list
+        }
     }
 
 

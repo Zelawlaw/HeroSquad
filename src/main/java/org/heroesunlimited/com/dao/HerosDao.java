@@ -28,11 +28,10 @@ public interface HerosDao {
     Hero findById(int id);
 
     // UPDATE
-    void update(int id,int squadId, int powerId, int weaknessId);
+    void update(int id, int squadId, int powerId, int weaknessId);
 
     // DELETE
     void deleteById(int id);
-
 
 
     void clearAllHeros();

@@ -13,14 +13,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
-public class Sql2oHeroDao  implements HerosDao {
+public class Sql2oHeroDao implements HerosDao {
 
     private final Logger logger = LoggerFactory.getLogger("HeroDao");
     private final Sql2o sql2o;
 
     @Override
     public List<Hero> getAll() {
-        try(Connection con = sql2o.open()){
+        try (Connection con = sql2o.open()) {
             return con.createQuery("SELECT * FROM heros") //raw sql
                     .executeAndFetch(Hero.class); //fetch a list
         }
@@ -28,7 +28,7 @@ public class Sql2oHeroDao  implements HerosDao {
 
     @Override
     public List<Hero> getAllNotInSquad() {
-        try(Connection con = sql2o.open()){
+        try (Connection con = sql2o.open()) {
             return con.createQuery("SELECT * FROM heros WHERE squadId = 0") //raw sql
                     .executeAndFetch(Hero.class); //fetch a list
         }
@@ -36,9 +36,9 @@ public class Sql2oHeroDao  implements HerosDao {
 
     @Override
     public List<Hero> getAllInSquad(int squadId) {
-        try(Connection con = sql2o.open()){
+        try (Connection con = sql2o.open()) {
             return con.createQuery("SELECT * FROM heros WHERE squadId = :squadId") //raw sql
-                    .addParameter("squadId",squadId)
+                    .addParameter("squadId", squadId)
                     .executeAndFetch(Hero.class); //fetch a list
         }
     }
@@ -47,28 +47,26 @@ public class Sql2oHeroDao  implements HerosDao {
     public List<Hero> getAllWithPower(int powerId) {
         Connection con = null;
         List<Hero> heros = new ArrayList<>();
-        try{
+        try {
             con = sql2o.open();
-            heros= con.createQuery("SELECT * FROM heros WHERE powerId = :powerId") //raw sql
-                    .addParameter("powerId",powerId)
+            heros = con.createQuery("SELECT * FROM heros WHERE powerId = :powerId") //raw sql
+                    .addParameter("powerId", powerId)
                     .executeAndFetch(Hero.class); //fetch a list
-        }
-        catch(Exception Ex){
-            logger.error(Ex.getMessage(),Ex);
-        }
-        finally{
-            if(con != null) {
+        } catch (Exception Ex) {
+            logger.error(Ex.getMessage(), Ex);
+        } finally {
+            if (con != null) {
                 con.close();
             }
         }
-     return heros;
+        return heros;
     }
 
     @Override
     public List<Hero> getAllWithWeakness(int weaknessId) {
-        try(Connection con = sql2o.open()){
+        try (Connection con = sql2o.open()) {
             return con.createQuery("SELECT * FROM heros WHERE weaknessId = :weaknessId") //raw sql
-                    .addParameter("weaknessId",weaknessId)
+                    .addParameter("weaknessId", weaknessId)
                     .executeAndFetch(Hero.class); //fetch a list
         }
     }
@@ -77,13 +75,13 @@ public class Sql2oHeroDao  implements HerosDao {
     public int add(Hero hero) {
         String sql = "INSERT INTO heros (name,age,squadid,powerid,weaknessid) VALUES (:name,:age,:squadId,:powerId" +
                 ",:weaknessId)"; //raw sql
-        try(Connection con = sql2o.open()){ //try to open a connection
-            return (int)  con.createQuery(sql, true)
-                    .addParameter("name",hero.getName())
-                    .addParameter("age",hero.getAge())
-                    .addParameter("squadId",hero.getSquadId())
-                    .addParameter("powerId",hero.getPowerId())
-                    .addParameter("weaknessId",hero.getWeaknessId())
+        try (Connection con = sql2o.open()) { //try to open a connection
+            return (int) con.createQuery(sql, true)
+                    .addParameter("name", hero.getName())
+                    .addParameter("age", hero.getAge())
+                    .addParameter("squadId", hero.getSquadId())
+                    .addParameter("powerId", hero.getPowerId())
+                    .addParameter("weaknessId", hero.getWeaknessId())
                     .executeUpdate()
                     .getKey();
         }
@@ -92,8 +90,8 @@ public class Sql2oHeroDao  implements HerosDao {
     @Override
     public Hero findById(int id) {
         String sql = "SELECT * FROM heros WHERE id=:id";
-        try(Connection con = sql2o.open()){
-         return  con.createQuery(sql)
+        try (Connection con = sql2o.open()) {
+            return con.createQuery(sql)
                     .addParameter("id", id)
                     .executeAndFetchFirst(Hero.class);
         }
@@ -103,12 +101,12 @@ public class Sql2oHeroDao  implements HerosDao {
     public void update(int id, int squadId, int powerId, int weaknessId) {
         String sql = "UPDATE  heros SET squadid = :squadId,powerid = :powerId,weaknessid =:weaknessId " +
                 "WHERE id = :id"; //raw sql
-        try(Connection con = sql2o.open()){ //try to open a connection
-           con.createQuery(sql)
-                    .addParameter("id",id)
-                    .addParameter("squadId",squadId)
-                    .addParameter("powerId",powerId)
-                    .addParameter("weaknessId",weaknessId)
+        try (Connection con = sql2o.open()) { //try to open a connection
+            con.createQuery(sql)
+                    .addParameter("id", id)
+                    .addParameter("squadId", squadId)
+                    .addParameter("powerId", powerId)
+                    .addParameter("weaknessId", weaknessId)
                     .executeUpdate();
         }
     }
@@ -116,23 +114,23 @@ public class Sql2oHeroDao  implements HerosDao {
     @Override
     public void deleteById(int id) {
         String sql = "DELETE FROM heros WHERE id=:id";
-        try(Connection con = sql2o.open()){
+        try (Connection con = sql2o.open()) {
             con.createQuery(sql)
                     .addParameter("id", id)
                     .executeUpdate();
         } catch (Sql2oException ex) {
-            logger.error(ex.getMessage(),ex);
+            logger.error(ex.getMessage(), ex);
         }
     }
 
     @Override
     public void clearAllHeros() {
         String sql = "DELETE FROM heros";
-        try(Connection con = sql2o.open()){
+        try (Connection con = sql2o.open()) {
             con.createQuery(sql)
                     .executeUpdate();
         } catch (Sql2oException ex) {
-            logger.error(ex.getMessage(),ex);
+            logger.error(ex.getMessage(), ex);
         }
     }
 }
