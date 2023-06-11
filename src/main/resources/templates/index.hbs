@@ -7,7 +7,7 @@
                 <ul class="list-group display-list">
 
                     {{#each squads}}
-                        <li class="list-group-item">{{name}}</li>
+                        <li class="list-group-item transparent">{{name}}</li>
                     {{/each}}
                 </ul>
             </div>
@@ -16,7 +16,7 @@
                 <ul class="list-group display-list ">
 
                     {{#each heroesWithoutSquads}}
-                        <li class="list-group-item transparent">{{name}}</li>
+                        <li class="list-group-item transparent">  <a href="/heroes/{{id}}"> {{name}} </a></li>
                     {{/each}}
                 </ul>
             </div>

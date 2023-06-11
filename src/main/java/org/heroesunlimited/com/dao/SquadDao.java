@@ -24,4 +24,6 @@ public interface SquadDao {
 
 
     Squad findByname(String squadname);
+
+    Squad findByName(String squad);
 }

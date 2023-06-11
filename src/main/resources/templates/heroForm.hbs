@@ -11,7 +11,14 @@
                 <label for="power">Power</label>
                 <select id="power" name="power" class="form-control" style="width: 30%;">
                     {{#each powers}}
-                        <option value="{{name}}">{{name}}</option>
+                        <option value="{{name}}">
+                            <if condition="Equals(powerId, 20)">
+                                <p selected> bla fish {{name}}</p>
+                            </if>
+                            <else>
+                                <p>{{name}}</p>
+                            </else>
+                        </option>
                     {{/each}}
                 </select>
             </div>

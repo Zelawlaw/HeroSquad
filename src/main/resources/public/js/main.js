@@ -41,3 +41,9 @@ function toggleSquadForm() {
         squadForm.style.display = "none";
     }
 }
+
+
+// Define the ifEquals helper function
+Handlebars.registerHelper('ifItsEqual', function(arg1, arg2, options) {
+  return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
+});
