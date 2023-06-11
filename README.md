@@ -49,7 +49,7 @@ Here is how it will look like upon successful installation
 - CS
 - Javascript
 - Handlebars
-- MySQL
+- PostGreSQL
 
 
 
