@@ -1,5 +1,3 @@
-
-
 {{#partial "content"}}
     {{#if errorMessage}}
         <div class="error-message">{{errorMessage}}</div>
@@ -11,7 +9,7 @@
             <ol class="display-list">
                 {{#each heroes}}
                     <li>
-                        {{name}}  -  {{age}} Years Old
+                        <a href="/heroes/{{id}}"> {{name}}  -  {{age}} Years Old </a>
                     </li>
                 {{/each}}
             </ol>

@@ -29,3 +29,21 @@ $(document).ready(function() {
     // Set the default selected tab
     $('.nav-tabs li.active a').addClass('selected');
 });
+
+
+function toggleSquadForm() {
+    var squadForm = document.getElementById("squadForm");
+    var showSquadCheckbox = document.getElementById("showSquad");
+
+    if (showSquadCheckbox.checked) {
+        squadForm.style.display = "block";
+    } else {
+        squadForm.style.display = "none";
+    }
+}
+
+
+// Define the ifEquals helper function
+Handlebars.registerHelper('ifItsEqual', function(arg1, arg2, options) {
+  return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
+});

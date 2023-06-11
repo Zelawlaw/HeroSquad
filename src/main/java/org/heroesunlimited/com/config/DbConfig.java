@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 public class DbConfig {
     //connect to psql datasource
-    public static Sql2o datasource (){
+    public static Sql2o datasource() {
         Dotenv dotenv = Dotenv.load();
         String url = dotenv.get("dbUrl") != null ? dotenv.get("dbUrl") : System.getenv("dbUrl");
         String user = dotenv.get("dbUsername") != null ? dotenv.get("dbUsername") : System.getenv("dbUsername");
